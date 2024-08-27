@@ -18,15 +18,7 @@ pushuntil (x:xs) y
  | x == y = xs
  | x /= y = pushuntil xs y
 
-trimzip :: String -> [[String]]
-trimzip [] = []
-trimzip x = map (\y -> trim y ',') (trim (pushuntil x ':') ';')
-
-trimzip2 :: String -> [[String]]
-trimzip2 x = concat $ map (\y -> (map (\z-> filter (\c->length c > 0) (trim z ' ')) y)) (map (\y -> trim y ',') (trim (pushuntil x ':') ';'))
-
-
-trz4 x = map (\[a,b] -> (a, read b :: Integer)) (sort $ map (\c -> reverse c) (trimzip2 x))
+trz4 x = map (\[a,b] -> (a, read b :: Integer)) (sort $ map (\c -> reverse c) (concat $ map (\y -> (map (\z-> filter (\c->length c > 0) (trim z ' ')) y)) (map (\y -> trim y ',') (trim (pushuntil x ':') ';'))))
 trz5 [] = True
 trz5 ((a,b):xs)
  | a == "red" && b < 13 = trz5 xs
